@@ -19,7 +19,7 @@ class Reminder(commands.Cog):
     )
     
     @reminder.command()
-    async def add(self, ctx: discord.ApplicationContext, title: str, description: Optional[str]=None):
+    async def add(self, ctx: discord.ApplicationContext, title: str, time: str, description: Optional[str]=None, date: str = None):
         """
             COMMAND: add
             ARGUMENTS: 
@@ -27,7 +27,7 @@ class Reminder(commands.Cog):
                 - description (OPTIONAL str)
             Takes in a title and description and creates a model 
         """
-
+        
         await ctx.respond(f"Successfully added {title}")
     
 
