@@ -10,7 +10,7 @@ owner_ids = [884026947699634197]
 
 bot = commands.Bot(command_prefix=">", intents=discord.Intents.all(), owner_ids=owner_ids)
 
-cogs = []
+cogs = ["core"]
 
 for cog in list(cogs):
     try:
