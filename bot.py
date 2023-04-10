@@ -8,9 +8,9 @@ load_dotenv('.env')
 token = os.getenv('TOKEN')
 owner_ids = [884026947699634197]
 
-bot = commands.Bot(command_prefix=">", intents=discord.Intents.all(), owner_ids=owner_ids)
+bot = discord.Bot(owner_ids=owner_ids)
 
-cogs = ["core"]
+cogs = ["core", "reminders"]
 
 for cog in list(cogs):
     try:
@@ -38,8 +38,8 @@ async def reload(ctx, ext):
     if ext in cogs:
         bot.unload_extension(f"cogs.{ext}")
         bot.load_extension(f"cogs.{ext}")
-        await ctx.send(f"Successfully reloaded `{ext}`")
+        await ctx.respond(f"Successfully reloaded `{ext}`")
     else:
-        await ctx.send("Cog not found")
+        await ctx.respond("Cog not found")
 
 bot.run(token)

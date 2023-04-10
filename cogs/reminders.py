@@ -1,0 +1,35 @@
+import discord
+from discord.ext import commands
+from discord.commands import SlashCommandGroup
+from os import getenv
+from typing import Optional
+
+class Reminder(commands.Cog):
+    """
+        REMINDER COG
+        Contains all the commands and listeners related to the Reminder feature.
+    """
+    def __init__(self, bot):
+        self.bot: commands.Bot = bot
+    
+    # Creating a subclass group
+    reminder = SlashCommandGroup(
+        name="reminder",
+        description="Follow up with work!"
+    )
+    
+    @reminder.command()
+    async def add(self, ctx: discord.ApplicationContext, title: str, description: Optional[str]=None):
+        """
+            COMMAND: add
+            ARGUMENTS: 
+                - title (str)
+                - description (OPTIONAL str)
+            Takes in a title and description and creates a model 
+        """
+
+        await ctx.respond(f"Successfully added {title}")
+    
+
+def setup(bot):
+    bot.add_cog(Reminder(bot))
