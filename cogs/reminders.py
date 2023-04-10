@@ -3,6 +3,8 @@ from discord.ext import commands
 from discord.commands import SlashCommandGroup
 from os import getenv
 from typing import Optional
+from utils import Utils
+
 
 class Reminder(commands.Cog):
     """
@@ -11,6 +13,7 @@ class Reminder(commands.Cog):
     """
     def __init__(self, bot):
         self.bot: commands.Bot = bot
+        self.utils = Utils()
     
     # Creating a subclass group
     reminder = SlashCommandGroup(
@@ -27,8 +30,8 @@ class Reminder(commands.Cog):
                 - description (OPTIONAL str)
             Takes in a title and description and creates a model 
         """
-        
-        await ctx.respond(f"Successfully added {title}")
+        rem_time = self.utils.parse_time(time, date)
+        await ctx.respond(f"Successfully added {title} for {rem_time.time()} {rem_time.date()}")
     
 
 def setup(bot):

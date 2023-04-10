@@ -7,10 +7,12 @@ class Utils:
         This class contains all the utility functions for various data parsing/operations.
     """
 
-    def parse_time(self, time: str, date: str) -> datetime:
+    def parse_time(self, time: str, date: str) -> datetime.datetime:
         try:
-            
-            input_date = datetime.datetime.strptime(date, '%d/%m/%y')
+            if not date:
+                input_date = datetime.datetime.now()
+            else:
+                input_date = datetime.datetime.strptime(date, '%d/%m/%y')
             input_time = datetime.datetime.strptime(time, '%H:%M')
             return datetime.datetime.combine(input_date.date(), input_time.time())
             
