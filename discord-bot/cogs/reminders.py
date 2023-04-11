@@ -74,6 +74,5 @@ class ReminderCog(commands.Cog):
             await user.send(f"**REMINDER** \n{rem.title} \n{rem.description if rem.description else 'No Description'}")
             self.db.delete_reminder(rem.id)
 
-
 def setup(bot):
     bot.add_cog(ReminderCog(bot))
