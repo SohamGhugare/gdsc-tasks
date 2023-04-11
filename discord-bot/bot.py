@@ -10,7 +10,7 @@ owner_ids = [884026947699634197]
 
 bot = discord.Bot(owner_ids=owner_ids)
 
-cogs = ["core", "reminders"]
+cogs = ["core", "reminders", "music"]
 
 for cog in list(cogs):
     try:
