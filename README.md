@@ -1,7 +1,6 @@
 # GDSC Tasks
 
 ### Python tasks:
-1. Discord bot
 
 # Discord Bot 
 This branch contains all the code for the discord bot with following features: 
