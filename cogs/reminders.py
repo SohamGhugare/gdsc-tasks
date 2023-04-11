@@ -6,7 +6,7 @@ from typing import Optional
 from utils import Utils
 
 
-class Reminder(commands.Cog):
+class ReminderCog(commands.Cog):
     """
         REMINDER COG
         Contains all the commands and listeners related to the Reminder feature.
@@ -31,8 +31,9 @@ class Reminder(commands.Cog):
             Takes in a title and description and creates a model 
         """
         rem_time = self.utils.parse_time(time, date)
+        
         await ctx.respond(f"Successfully added {title} for {rem_time.time()} {rem_time.date()}")
     
 
 def setup(bot):
-    bot.add_cog(Reminder(bot))
+    bot.add_cog(ReminderCog(bot))

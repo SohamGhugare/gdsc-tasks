@@ -1,6 +1,7 @@
 from models import Reminder
-from sqlmodel import create_engine, Session
+from sqlmodel import create_engine, Session, select
 from datetime import datetime
+from typing import List
 
 class Database:
     """
@@ -24,12 +25,24 @@ class Database:
             session.refresh(reminder)
             return reminder.id
         
-# Dummy Driver Code
+    # Fetches all reminders
+    def fetch_all_reminders(self) -> List[Reminder]:
+        with self.session as session:
+            return session.exec(select(Reminder)).all()
+        
+# Dummy Driver Code (Unit Tests)
 if __name__ == "__main__":
     db = Database()
-    rem = Reminder(
-        title="Test Reminder",
-        author_id=12345678,
-        time=datetime.now()
-    )
-    db.add_reminder(rem)
+
+    # Adding new reminder
+    # rem = Reminder(
+    #     title="Test Reminder",
+    #     author_id=12345678,
+    #     time=datetime.now()
+    # )
+
+    # db.add_reminder(rem)
+
+    # Printing all reminders
+    for rem in db.fetch_all_reminders():
+        print(f"ID: {rem.id} \nTitle: {rem.title} \nDescription: {rem.description} \nTime: {rem.time.time().strftime('%H:%M')} {rem.time.date()}")
