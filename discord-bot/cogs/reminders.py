@@ -19,6 +19,10 @@ class ReminderCog(commands.Cog):
         self.utils = Utils()
         self.db = Database()
     
+    @commands.Cog.listener()
+    async def on_ready(self):
+        await self.scan.start()
+
     # Creating a subclass group
     reminder = SlashCommandGroup(
         name="reminder",
@@ -59,7 +63,17 @@ class ReminderCog(commands.Cog):
             rems+=f"**ID:** {rem.id} \n**Title:** {rem.title} \n**Description:** {rem.description} \n**Time:** {rem.time.time().strftime('%H:%M')} {rem.time.date()}\n\n"
         await ctx.respond(rems)
 
-    
+    @tasks.loop(minutes=1)
+    async def scan(self):
+        """
+            EVENT LOOP
+            Runs every min to check if any reminders are expired
+        """
+        for rem in self.db.check_reminders():
+            user = await self.bot.get_or_fetch_user(rem.author_id)
+            await user.send(f"**REMINDER** \n{rem.title} \n{rem.description if rem.description else 'No Description'}")
+            self.db.delete_reminder(rem.id)
+
 
 def setup(bot):
     bot.add_cog(ReminderCog(bot))
