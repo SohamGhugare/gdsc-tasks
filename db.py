@@ -43,6 +43,12 @@ class Database:
                 rems.append(rem)
         return rems
         
+    # Delete reminders
+    def delete_reminder(self, id: int):
+        with self.session as session:
+            session.delete(session.exec(select(Reminder).where(Reminder.id == id)).first())
+            session.commit()
+
 # Dummy Driver Code (Unit Tests)
 if __name__ == "__main__":
     db = Database()
