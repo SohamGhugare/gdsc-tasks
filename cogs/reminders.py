@@ -47,7 +47,17 @@ class ReminderCog(commands.Cog):
         )
         idx = self.db.add_reminder(rem)
         await ctx.respond(f":white_check_mark: Successfully added Reminder #{idx}")
-    
+
+    @reminder.command()
+    async def list(self, ctx: discord.ApplicationContext):
+        """
+            COMMAND list
+            Lists all the reminders of the user
+        """
+        rems = ""
+        for rem in self.db.fetch_user_reminders(ctx.author.id):
+            rems+=f"**ID:** {rem.id} \n**Title:** {rem.title} \n**Description:** {rem.description} \n**Time:** {rem.time.time().strftime('%H:%M')} {rem.time.date()}\n\n"
+        await ctx.respond(rems)
 
 def setup(bot):
     bot.add_cog(ReminderCog(bot))

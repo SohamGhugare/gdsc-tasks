@@ -30,6 +30,11 @@ class Database:
         with self.session as session:
             return session.exec(select(Reminder)).all()
         
+    # Fetches reminders of a specific user
+    def fetch_user_reminders(self, user_id: int) -> List[Reminder]:
+        with self.session as session:
+            return session.exec(select(Reminder).where(Reminder.author_id == user_id)).all()
+        
 # Dummy Driver Code (Unit Tests)
 if __name__ == "__main__":
     db = Database()
