@@ -1,4 +1,5 @@
 from models import Reminder
+from sqlmodel import create_engine, Session
 
 class Database:
     """
@@ -8,4 +9,16 @@ class Database:
 
     def __init__(self) -> None:
         self.uri = "sqlite:///database/data.db"
-        
+        self.engine = create_engine(self.uri)
+    
+    @property
+    def session(self) -> Session:
+        return Session(self.engine)
+
+    # Adds a new reminder and returns the reminder id
+    def add_reminder(self, reminder: Reminder) -> int:
+        with self.session as session:
+            session.add(reminder)
+            session.commit()
+            session.refresh(reminder)
+            return reminder.id
