@@ -7,6 +7,7 @@ This branch contains all the code for the discord bot with following features:
 (This enables the usage of **FastAPI** for creating an API which can handle the backend converting it into a microservice)
 
 ## Reminder
-**Note:** `<arg>: Required argument / [arg]: Optional argument` <br>
+**Note:** `<arg>: Required argument / [arg]: Optional argument / TBI: To Be Implemented` <br>
 1. `/reminder add <title> [description] <time> [date]` - Creates a new reminder
 2. `/reminder list` - Lists all the reminders
+3. **TBI** `/reminder delete <id>` - Deletes a reminder based on ID
