@@ -3,8 +3,11 @@ from discord.ext import commands
 from discord.commands import SlashCommandGroup
 from os import getenv
 from typing import Optional
-from utils import Utils
 
+from utils import Utils
+from models import Reminder
+from db import Database
+from exceptions import InvalidDateTimeFormat
 
 class ReminderCog(commands.Cog):
     """
@@ -14,6 +17,7 @@ class ReminderCog(commands.Cog):
     def __init__(self, bot):
         self.bot: commands.Bot = bot
         self.utils = Utils()
+        self.db = Database()
     
     # Creating a subclass group
     reminder = SlashCommandGroup(
@@ -30,9 +34,19 @@ class ReminderCog(commands.Cog):
                 - description (OPTIONAL str)
             Takes in a title and description and creates a model 
         """
-        rem_time = self.utils.parse_time(time, date)
-        
-        await ctx.respond(f"Successfully added {title} for {rem_time.time()} {rem_time.date()}")
+        try:
+            rem_time = self.utils.parse_time(time, date)
+        except InvalidDateTimeFormat as e:
+            return await ctx.respond(e.message)
+
+        rem = Reminder(
+            title=title,
+            description=description,
+            author_id=ctx.author.id,
+            time=rem_time
+        )
+        idx = self.db.add_reminder(rem)
+        await ctx.respond(f":white_check_mark: Successfully added Reminder #{idx}")
     
 
 def setup(bot):
