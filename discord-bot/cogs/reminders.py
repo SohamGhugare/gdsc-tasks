@@ -1,5 +1,5 @@
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
 from discord.commands import SlashCommandGroup
 from os import getenv
 from typing import Optional
@@ -58,6 +58,8 @@ class ReminderCog(commands.Cog):
         for rem in self.db.fetch_user_reminders(ctx.author.id):
             rems+=f"**ID:** {rem.id} \n**Title:** {rem.title} \n**Description:** {rem.description} \n**Time:** {rem.time.time().strftime('%H:%M')} {rem.time.date()}\n\n"
         await ctx.respond(rems)
+
+    
 
 def setup(bot):
     bot.add_cog(ReminderCog(bot))
