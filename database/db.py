@@ -1,5 +1,6 @@
 from models import Reminder
 from sqlmodel import create_engine, Session
+from datetime import datetime
 
 class Database:
     """
@@ -22,3 +23,13 @@ class Database:
             session.commit()
             session.refresh(reminder)
             return reminder.id
+        
+# Dummy Driver Code
+if __name__ == "__main__":
+    db = Database()
+    rem = Reminder(
+        title="Test Reminder",
+        author_id=12345678,
+        time=datetime.now()
+    )
+    db.add_reminder(rem)
