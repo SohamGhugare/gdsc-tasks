@@ -19,7 +19,7 @@ function App() {
       ws.send("Connect")
     }
 
-    // Receiving data
+    // Recieving data
     ws.onmessage = (event) => {
       const message = JSON.parse(event.data)
       setMessage([...messages, message])
@@ -31,7 +31,15 @@ function App() {
     return () => ws.close()
   }, [message, messages])
 
-
+  const sendMessage = () => {
+    websckt.send(message);
+    // Recieve message after every sent message
+    websckt.onmessage = (e) => {
+      const message = JSON.parse(e.data);
+      setMessages([...messages, message]);
+    };
+    setMessage([]);
+  };
   
 
   return (
