@@ -26,6 +26,7 @@ class ChatGPT:
             "role": "user",
             "content": message
         })
+        # Fetching response wrt the history
         res = openai.ChatCompletion.create(
             model="gpt-3.5-turbo", messages=self.messages
         ).choices[0].message.content
@@ -35,3 +36,9 @@ class ChatGPT:
         })
         return res
 
+# Dummy driver code
+if __name__ == "__main__":
+    chatgpt = ChatGPT()
+    while True:
+        res = chatgpt.get_response(input("User: "))
+        print(f"ChatGPT: {res}")
