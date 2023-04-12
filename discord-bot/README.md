@@ -16,3 +16,6 @@ This branch contains all the code for the discord bot with following features:
 The ChatGPT class is ready to use and fully tested. Refer the screenshot below. To integrate this with the bot, we need to add an event listener `on_message(message: discord.Message)`, and then call the `ChatGPT.get_response(message.content)` method which takes the message content as an argument and returns a contextual response whilst updating the chat history for future references.
 
 [Screenshot](./assets/screenshot.png)
+
+## Music (To be implemented)
+Making use of YouTube's API `youtube-dl` (PyPI package available), we can fetch the music buffer from a youtube url and parse it in such a way that its compatible with the `discord.FFMPegPCMAudio` class which can directly play the buffer in a voice channel.
