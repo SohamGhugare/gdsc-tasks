@@ -32,9 +32,9 @@ function App() {
   }, [message, messages])
 
   const sendMessage = () => {
-    websckt.send(message);
+    websoc.send(message);
     // Recieve message after every sent message
-    websckt.onmessage = (e) => {
+    websoc.onmessage = (e) => {
       const message = JSON.parse(e.data);
       setMessages([...messages, message]);
     };
@@ -48,22 +48,27 @@ function App() {
       <h2>Your Client ID</h2>
       <div className="chat-container">
         <div className="chat">
-          <div className="messages-container">
-            <div className="messages">
-              <p className="client">Client ID: </p>
-              <p className="message">Hello World</p>
-            </div>
-          </div>
-          <div className="messages-container-2">
-            <div className="messages-2">
-              <p className="client">Client ID: </p>
-              <p className="message">Hello World</p>
-            </div>
-          </div>
+          {messages.map((value, index) => {
+            if(value.clientId === clientId){
+              <div className="messages-container">
+                <div className="messages">
+                  <p className="client">Client ID: </p>
+                  <p className="message">Hello World</p>
+                </div>
+              </div>
+            } else {
+              <div className="messages-container-2">
+                <div className="messages-2">
+                  <p className="client">Client ID: </p>
+                  <p className="message">Hello World</p>
+                </div>
+              </div>
+            }
+          })}
         </div>
         <div className="input-chat-container">
-          <input className="input-chat" type="text" placeholder="Enter message..." />
-          <button className="submit-chat">Send {`>>`}</button>
+          <input className="input-chat" type="text" placeholder="Enter message..." onChange={(e)=>setMessage(e.target.value)} value={message}/>
+          <button className="submit-chat" onClick={sendMessage}>Send {`>>`}</button>
         </div>
       </div>
     </div>
