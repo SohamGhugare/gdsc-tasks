@@ -20,14 +20,14 @@ function App() {
     // Recieving data
     ws.onmessage = (event) => {
       const message = JSON.parse(event.data)
-      setMessage([...messages, message])
+      setMessages([...messages, message])
     }
 
     setWebsoc(ws)
 
     // Cleaning up websocket once page closed
     return () => ws.close()
-  }, [message, messages])
+  }, [])
 
   const sendMessage = () => {
     websoc.send(message);
@@ -49,19 +49,19 @@ function App() {
           {messages.map((value, index) => {
             if(value.clientId === clientId){
               return (    
-                <div className="messages-container">
+                <div key={index} className="messages-container">
                   <div className="messages">
-                    <p className="client">Client ID: </p>
-                    <p className="message">Hello World</p>
+                    <p className="client">Client ID: {clientId}</p>
+                    <p className="message">{value.message}</p>
                   </div>
                 </div>
               )
             } else {
               return (
-                <div className="messages-container-2">
+                <div key={index} className="messages-container-2">
                   <div className="messages-2">
-                    <p className="client">Client ID: </p>
-                    <p className="message">Hello World</p>
+                    <p className="client">Client ID: {clientId}</p>
+                    <p className="message">{value.message}</p>
                   </div>
                 </div>
               )
