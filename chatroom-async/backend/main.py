@@ -44,5 +44,5 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
         await manager.broadcast(json.dumps(message))
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", reload=True)
+    uvicorn.run("main:app", host="127.0.0.1", port=8080, reload=True)
 
